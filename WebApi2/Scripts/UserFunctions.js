@@ -9,6 +9,16 @@ $(document).ready(function () {
         });
 });
 
+function refreshData() {
+    $.getJSON(uri)
+        .done(function (data) {
+            $("#users").html("");
+            $.each(data, function (key, item) {
+                $("<li>", { text: formatItem(item) }).appendTo($("#users"));
+            });
+        });
+}
+
 function formatItem(item) {
     if (item == null) {
         return "item null";
