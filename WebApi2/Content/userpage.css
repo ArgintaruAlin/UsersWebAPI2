@@ -1,0 +1,8 @@
+﻿div.grid {
+    width: 900px;
+}
+
+div.grid div {
+    float: left; 
+    height: 150px;
+}

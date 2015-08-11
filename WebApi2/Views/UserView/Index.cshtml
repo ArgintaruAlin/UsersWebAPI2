@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Test API</title>
+    <meta name="viewport" content="width=device-width" />
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script src="~/Scripts/UserFunctions.js"></script>
+    <link href="~/Content/userpage.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div>
+        <h2>All Users</h2>
+        <ul id="users"></ul>
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="userId" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <input type="button" value="Add User" onclick="addUser();" />
+    </div>
+    <div style="float: left">
+        <h2>User Details</h2>
+        <ul id="userdetails"></ul>
+    </div>
+
+    <div id="createForm" style="margin-left: 150px; float: left">
+        <h2>User Details</h2>
+        <div id="personName">
+            <p style="float: left">Name: </p>
+            <input style="float: left" type="text" id="newName" size="10" />
+        </div>
+        <br />
+        <br />
+        <div id="personUsername">
+            <p style="float: left">Username: </p>
+            <input style="float: left" type="text" id="newUsername" size="10" />
+        </div>
+        <br />
+        <br />
+        <div id="personPassword">
+            <p style="float: left">Password: </p>
+            <input style="float: left" type="text" id="newPassword" size="10" />
+        </div>
+        <br />
+        <input type="button" value="Create & Add User" onclick="createUser();" />
+    </div>
+
+</body>
+</html>
