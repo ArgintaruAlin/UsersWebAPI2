@@ -74,18 +74,19 @@ namespace WebApi2.Controllers
             return Ok($"Updated user {databaseUser.Username}");
         }
 
-        [Route("api/user/")]
-        public IHttpActionResult Delete(User user)
+        [HttpDelete]
+        [Route("api/user/{id}")]
+        public IHttpActionResult Delete(int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("Model state not valid!");
             }
 
-            var databaseUser = db.Users.ToList().FirstOrDefault(u => u.Username.ToLowerInvariant().Equals(user.Username.ToLowerInvariant()));
+            var databaseUser = db.Users.ToList().FirstOrDefault(u => u.Id.Equals(id));
             if (databaseUser == null)
             {
-                return BadRequest("Username not found!");
+                return BadRequest("Id not found!");
             }
 
             db.Users.Remove(databaseUser);

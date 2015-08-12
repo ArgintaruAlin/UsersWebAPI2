@@ -24,7 +24,7 @@ function formatItem(item) {
         return "item null";
     }
 
-    return item.Name + " : " + item.Username;
+    return item.Id + " : " + item.Name + " : " + item.Username;
 }
 
 function addUser() {
@@ -67,6 +67,18 @@ function createUser() {
         contentType: "application/json"
     }).done(function() {
         alert("Added user!");
+    });
+}
+
+function deleteUser() {
+    var id = $("#userId").val();
+
+    $.ajax({
+        type: "DELETE",
+        url: "api/user" + "/" + id,
+        contentType: "application/json"
+    }).done(function () {
+        alert("Deleted user with id: " + id + " !");
     });
 }
 
