@@ -1,4 +1,4 @@
-﻿var uri = "api/user/get";
+﻿var uri = "api/user/";
 
 $(document).ready(function () {
     $.getJSON(uri)
@@ -63,7 +63,7 @@ function createUser() {
     $.ajax({
         type: "POST",
         data: JSON.stringify(user),
-        url: "api/user",
+        url: uri,
         contentType: "application/json"
     }).done(function() {
         alert("Added user!");
@@ -75,7 +75,7 @@ function deleteUser() {
 
     $.ajax({
         type: "DELETE",
-        url: "api/user" + "/" + id,
+        url: uri + "/" + id,
         contentType: "application/json"
     }).done(function () {
         alert("Deleted user with id: " + id + " !");

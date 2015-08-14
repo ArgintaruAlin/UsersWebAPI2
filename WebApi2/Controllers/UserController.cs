@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using WebApi2.Context;
 using WebApi2.Models;
@@ -9,30 +10,33 @@ namespace WebApi2.Controllers
     {
         readonly AppContext db = new AppContext();
 
-        [HttpGet]
-        [Route("api/user/get")]
-        public IQueryable<User> GetAllUsers()
+        /// <summary>
+        /// The GET method that returns the list of users from database.
+        /// </summary>
+        /// <returns>
+        /// The list of users.
+        /// </returns>
+        public IEnumerable<User> Get()
         {
-            return db.Users;
+            return db.Users.ToList();
         }
-
-        [HttpGet]
-        [Route("api/user/get/{id}")]
-        public User GetUserById(int id)
+        
+        /// <summary>
+        /// Returns a user entity if found.
+        /// </summary>
+        /// <param name="id">The id of an user.</param>
+        /// <returns>The user entity</returns>
+        public User Get(int id)
         {
             return db.Users.Find(id);
         }
 
-        [HttpGet]
-        [Route("api/user/getbyusername/{username}")]
-        public User GetUserByUsername(string username)
-        {
-            return db.Users.FirstOrDefault(user => user.Username.ToLower().Equals(username.ToLower()));
-        }
-        
-        [HttpPost]
-        [Route("api/user/")]
-        public IHttpActionResult Post(User user)
+        /// <summary>
+        /// The POST method used to create a user entity.
+        /// </summary>
+        /// <param name="user">The user to add in the database.</param>
+        /// <returns>IHttpActionResult that indicates if the operation succeeded or failed</returns>
+        public IHttpActionResult Post([FromBody]User user)
         {
             if (!ModelState.IsValid)
             {
@@ -50,16 +54,14 @@ namespace WebApi2.Controllers
             return Ok($"Added user {user.Username}");
         }
         
-        [HttpPut]
-        [Route("api/user/")]
-        public IHttpActionResult Put(User user)
+        public IHttpActionResult Put(int id, [FromBody]User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("Model state not valid!");
             }
 
-            var databaseUser = db.Users.ToList().FirstOrDefault(u => u.Username.ToLowerInvariant().Equals(user.Username.ToLowerInvariant()));
+            var databaseUser = db.Users.ToList().FirstOrDefault(u => u.Id == user.Id);
             if (databaseUser == null)
             {
                 return BadRequest("Username not found!");
@@ -73,9 +75,7 @@ namespace WebApi2.Controllers
             db.SaveChanges();
             return Ok($"Updated user {databaseUser.Username}");
         }
-
-        [HttpDelete]
-        [Route("api/user/{id}")]
+        
         public IHttpActionResult Delete(int id)
         {
             if (!ModelState.IsValid)
@@ -95,7 +95,7 @@ namespace WebApi2.Controllers
             return Ok($"Deleted user {databaseUser.Username}");
         }
 
-        public new void Dispose()
+        protected new void Dispose()
         {
             db.Dispose();
             base.Dispose();
