@@ -7,22 +7,19 @@
 <head>
     <title>Test API</title>
     <meta name="viewport" content="width=device-width" />
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
-    <script src="~/Scripts/UserFunctions.js"></script>
-    <link href="~/Content/userpage.css" rel="stylesheet" />
 </head>
 <body>
 
     <div>
         <h2>All Users</h2>
-        <ul id="users"></ul>
+        <div id="table_div"></div>
     </div>
     <div>
         <h2>Search by ID</h2>
         <input type="text" id="userId" size="5" />
         <input type="button" value="Search" onclick="find();" />
-        <input type="button" value="Add User" onclick="addUser();"/>
-        <input type="button" value="Refresh" onclick="refreshData();"/>
+        <input type="button" value="Add User" onclick="addUser();" />
+        <input type="button" value="Refresh" onclick="refreshData();" />
         <input type="button" value="Delete User" onclick="deleteUser();" />
     </div>
     <div style="float: left">
@@ -52,5 +49,9 @@
         <input type="button" value="Create & Add User" onclick="createUser();" />
     </div>
 
+
+    <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['orgchart']}]}"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script src="~/Scripts/UserFunctions.js"></script>
 </body>
 </html>

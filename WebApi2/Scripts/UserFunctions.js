@@ -1,22 +1,44 @@
 ﻿var uri = "api/user/";
+google.load("visualization", "1.1", { packages: ["table"] });
+google.setOnLoadCallback(load);
 
-$(document).ready(function () {
+$(document).ready(load);
+
+function load() {
+    hideAddUserSection();
+
     $.getJSON(uri)
-        .done(function (data) {
-            $.each(data, function (key, item) {
-                $("<li>", { text: formatItem(item) }).appendTo($("#users"));
-            });
-        });
-});
+        .done(function (dataTable) {
+            drawTable(dataTable);
+    });
+}
+
+function hideAddUserSection() {
+    document.getElementById("createForm").style.display = "none";
+}
+
+function drawTable(dataTable) {
+    var data = new window.google.visualization.DataTable();
+    data.addColumn("number", "Id");
+    data.addColumn("string", "Name");
+    data.addColumn("string", "Username");
+    for (var index = 0; index < dataTable.length; index++) {
+        var arr = $.map(dataTable[index], function (el) { return el; });
+        data.addRow([arr[0], arr[1], arr[2]]);
+    }
+
+    var tableDiv = document.getElementById('table_div');
+    
+    if (tableDiv == null) {
+        return;
+    }
+
+    var table = new google.visualization.Table(document.getElementById('table_div'));
+    table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
+}
 
 function refreshData() {
-    $.getJSON(uri)
-        .done(function (data) {
-            $("#users").html("");
-            $.each(data, function (key, item) {
-                $("<li>", { text: formatItem(item) }).appendTo($("#users"));
-            });
-        });
+    load();
 }
 
 function formatItem(item) {
